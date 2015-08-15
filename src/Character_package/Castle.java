@@ -1,7 +1,6 @@
 package Character_package;
 
-<<<<<<< HEAD
-import abstract_package.Character;
+import java.awt.Graphics;
 
 public class Castle extends Character{
 	
@@ -33,12 +32,10 @@ public class Castle extends Character{
 	}
 
 	@Override
-	public void Paint() {
+	public void Paint(Graphics g) {
 		// TODO Auto-generated method stub
 		
 	}
-=======
-public class Castle {
->>>>>>> b77f0ea73a046fa041836a6c13a2d0958576ef7b
+
 
 }

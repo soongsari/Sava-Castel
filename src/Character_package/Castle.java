@@ -20,7 +20,7 @@ public class Castle extends Character{
 	}
 
 	@Override
-	public void Damaged() {
+	public void Damaged(int str) {
 		// TODO Auto-generated method stub
 		
 	}

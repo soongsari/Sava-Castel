@@ -14,7 +14,11 @@ public abstract class Character {
 	
 	public abstract void Attack();
 	public abstract void Move();
-	public abstract void Damaged();
+	public abstract void Damaged(int str);
 	public abstract void Meet();
 	public abstract void Paint(Graphics g);
+	
+	public boolean isDie(){
+		return die;
+	}
 }

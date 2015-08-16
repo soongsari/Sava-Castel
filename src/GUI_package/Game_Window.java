@@ -1,101 +1,110 @@
 package GUI_package;
-import java.awt.Canvas;
+
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Panel;
 import java.util.ArrayList;
+
 import Character_package.Character;
-
-<<<<<<< HEAD
-public class Game_Window extends Canvas implements Runnable{
-	
-	ArrayList<Character> chr_list = new ArrayList<>();
-=======
-import java.util.ArrayList;
-
 import Character_package.Enemy;
 import Character_package.Hero;
 
-public class Game_Window {
-	ArrayList<Hero> heroes = new ArrayList<Hero>();
-	ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-	
-	Thread createEnemy = new Thread(new Enemy());
-	
-	
-	public Game_Window(){
-		
-		createEnemy.start();
-		
-	}
-	
-	
-	public void GameStart(){
-		while(true){
-			for(int i=0; i<heroes.size(); i++){
-				Hero tempHero = heroes.get(i);
-				
-				//죽었는지 살았는지 확인
-				if(tempHero.isDie()==true){		//죽었을때
-					
-					heroes.remove(i);
-					break;
-					
-				} else {						//살았을때
-					tempHero.Move(enemies);		//이동, 공격
-					tempHero.Attack();
-				}
-			}
-		}
-	}
-	
-	
-	//Enemy를 Enemies에 추가 -- 리스트 사이즈가 10 이상이면 쓰레드 종료
-	public void Add(Enemy e){
-		if(enemies.size()>=10){
-			createEnemy.stop();
-		} else {
-			enemies.add(e);
-		}
-	}
-	
-	//사용할지 모름
-	public void Drop(Enemy e){
-		enemies.remove(e);
-	}
->>>>>>> 5ebdeae13c806a5306e34c31d30916d538c0e875
+public class Game_Window extends Panel implements Runnable {
 
-	public Game_Window(int weight, int height){
+	static ArrayList<Enemy> enemy_list = new ArrayList<>();
+	static ArrayList<Hero> hero_list = new ArrayList<>();
+
+	int num = 0, weight, height;
+
+	public Game_Window(int weight, int height) {
+
+		this.weight = weight;
+		this.height = height;
+
 		this.setBackground(Color.white);
-		this.setSize(weight,height);
-		
+		this.setSize(weight, height);
+
 		Thread th = new Thread(this);
 		th.start();
 	}
 
-	public void chr_add(Character chr){
-		chr_list.add(chr);
-	}
-	
-	public void chr_remove(int index){
-		chr_list.remove(index);
-	}
-	
-	public void paint(Graphics g){
+	public void GameStart() {
+
+		// while(true){
+		for (int i = 0; i < hero_list.size(); i++) {
+			Hero tempHero = hero_list.get(i);
+			boolean flag = false;
+
+			if (tempHero.isDie() == true) { // 죽었을때
+				hero_list.remove(i);
+				continue;
+
+			}
+			
+			for (int j = 0; j < enemy_list.size(); j++) {
+
+				if (tempHero.Meet(enemy_list.get(j))) {
+					enemy_list.get(j).Damaged(tempHero.getStr()); // 적공격
+					tempHero.Damaged(enemy_list.get(j).getStr()); // 아군공격 받음
+
+					flag = true;
+
+					if (enemy_list.get(j).isDie()) {
+						enemy_list.remove(j);
+						flag = false;
+					}
+					
 		
-		for(int i=0;i<chr_list.size();i++)
-		{
-			Character temp = chr_list.get(i);
-			temp.Move();
+				} else {
+					enemy_list.get(j).Move();
+				}
+			}
+
+			// 공격할 상대가 없으면 이동
+			if (flag == false) {
+			//	tempHero.Move();
+			}
+		}
+
+	}
+
+	// }
+
+	public void paint(Graphics g) {
+
+		g.fillRect(0, 0, weight, height);
+
+		ArrayList<Character> temp_array = new ArrayList<>();
+		temp_array.addAll(enemy_list);
+		temp_array.addAll(hero_list);
+
+		for (int i = 0; i < temp_array.size(); i++) {
+			Character temp = temp_array.get(i);
 			temp.Paint(g);
+			temp.Move();
 		}
 	}
-	
+
+	public void update(Graphics g) {
+		paint(g);
+	}
+
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		while(true){
+		while (true) {
+
+			num++;
 			repaint();
-			
+
+			if (num % 200 == 0) {
+				Enemy ene = new Enemy();
+				enemy_list.add(ene);
+			}
+
+			GameStart();
+
 			try {
 				Thread.sleep(15);
 			} catch (InterruptedException e) {
@@ -103,6 +112,6 @@ public class Game_Window {
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
 }

@@ -1,29 +1,23 @@
 package Character_package;
 
-<<<<<<< HEAD
+import java.awt.Color;
 import java.awt.Graphics;
-=======
 import java.util.ArrayList;
->>>>>>> 5ebdeae13c806a5306e34c31d30916d538c0e875
 
 import GUI_package.Game_Window;
 
 public class Enemy extends Character implements Runnable{
-	
-	int HP;
-	int SPEED;
-	int STR;
-	boolean die;
-	int x=0,y=300;
-	boolean type;
-	int image;
-	
-	
-	Game_Window g_w;
-	
-	
+
 	public Enemy(){
-		g_w = new Game_Window();
+
+		this.x = 0;
+		this.y = 300;
+		this.HP=10;
+		this.SPEED=1;
+		this.STR = 1;
+		this.die = false;
+		this.type = true;		//true 는 아군 
+		//this.image = 1;
 	}
 
 	@Override
@@ -31,51 +25,32 @@ public class Enemy extends Character implements Runnable{
 		
 	}
 
-	@Override
-<<<<<<< HEAD
-	public void Move() {
-		// TODO Auto-generated method stub
-=======
-	public void Move(ArrayList heroes) {		//왼쪽에서 오른쪽으로 이동
->>>>>>> 5ebdeae13c806a5306e34c31d30916d538c0e875
+	public void Move() {		//왼쪽에서 오른쪽으로 이동
+
 		x = x + SPEED;
 	}
 
-	@Override
-	public void Damaged(int str) {
-		HP = HP - str;
-		if(HP<=0){
-			die = true;
-		}
-	}
-
-	@Override
-	public void Meet() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void Paint(Graphics g) {
 		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
+		g.setColor(Color.black);
+		g.fillRect(x, y, 30, 30);
+		g.setColor(Color.white);
+		g.drawRect(x, y, 30, 30);
 		
 	}
-<<<<<<< HEAD
 
-
-=======
-	
-	
+	@Override
 	public void run() {
-		g_w.Add(new Enemy());
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// TODO Auto-generated method stub
+		
 	}
->>>>>>> 5ebdeae13c806a5306e34c31d30916d538c0e875
 
-
+	@Override
+	public boolean isDie() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

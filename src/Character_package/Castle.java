@@ -1,23 +1,13 @@
 package Character_package;
 
-<<<<<<< HEAD
 import java.awt.Graphics;
-=======
 import java.util.ArrayList;
-
->>>>>>> 5ebdeae13c806a5306e34c31d30916d538c0e875
 
 public class Castle extends Character{
 	
-	int HP;
-	int SPEED;
-	int STR;
-	boolean die;
-	int x,y;
-	boolean type;
-	int image;
-	
+
 	public Castle(){
+		
 		this.HP=1000;
 		this.SPEED=0;
 		this.STR = 0;
@@ -35,29 +25,20 @@ public class Castle extends Character{
 		
 	}
 
-	@Override
-	public void Move(ArrayList enemies) {	//파라미터 필요 없으니 오버로딩 필요
-
-		
-	}
 
 	@Override
 	public void Damaged(int str) {
-<<<<<<< HEAD
-		// TODO Auto-generated method stub
-		
-=======
 		HP = HP - str;
 		if(HP<=0){
 			die = true;
 		}
->>>>>>> 5ebdeae13c806a5306e34c31d30916d538c0e875
+
 	}
 
 	@Override
-	public void Meet() {
+	public boolean Meet(Character chr) {
 		// TODO Auto-generated method stub
-		
+		return false;
 	}
 
 	@Override
@@ -66,9 +47,10 @@ public class Castle extends Character{
 		
 	}
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 5ebdeae13c806a5306e34c31d30916d538c0e875
+	@Override
+	public void Move() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

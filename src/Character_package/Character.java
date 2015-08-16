@@ -2,7 +2,7 @@ package Character_package;
 
 import java.awt.Graphics;
 
-public abstract class Character {
+public abstract class Character{
 	
 	int HP;
 	int SPEED;
@@ -14,11 +14,44 @@ public abstract class Character {
 	
 	public abstract void Attack();
 	public abstract void Move();
-	public abstract void Damaged(int str);
-	public abstract void Meet();
+	
+	public boolean Meet(Character chr){
+		
+		
+		boolean isMeet = false;
+		if (chr.isDie() == true) { // 적군 죽음
+			
+		} else {
+			if (Math.abs(chr.getX()-x) <= 20) { // Enemy의 X+1 값이 Hero의 X 값과 같으면
+				isMeet = true;
+			}
+		}
+		return isMeet;
+	}
+	
+	
 	public abstract void Paint(Graphics g);
+	
+	
+	public void Damaged(int str){
+		
+		HP = HP - str;
+		
+		if(HP<=0){
+			die = true;
+		}
+	}
+	
+	
+	public int getX(){
+		return x;
+	}
 	
 	public boolean isDie(){
 		return die;
+	}
+	
+	public int getStr(){
+		return STR;
 	}
 }

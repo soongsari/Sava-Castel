@@ -12,11 +12,11 @@ public class Enemy extends Character implements Runnable{
 
 		this.x = 0;
 		this.y = 300;
-		this.HP=10;
+		this.HP=100;
 		this.SPEED=1;
 		this.STR = 1;
 		this.die = false;
-		this.type = true;		//true 는 아군 
+		this.type = false;		//true 는 아군 
 		//this.image = 1;
 	}
 
@@ -48,9 +48,4 @@ public class Enemy extends Character implements Runnable{
 		
 	}
 
-	@Override
-	public boolean isDie() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 }

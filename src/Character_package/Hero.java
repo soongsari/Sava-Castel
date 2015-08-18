@@ -12,7 +12,7 @@ public class Hero extends Character{
 			
 			this.x = 550;
 			this.y = 300;
-			this.HP=10;
+			this.HP=100;
 			this.SPEED=1;
 			this.STR = 1;
 			this.die = false;

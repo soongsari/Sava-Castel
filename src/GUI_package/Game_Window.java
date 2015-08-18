@@ -1,5 +1,6 @@
 package GUI_package;
 
+import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -10,15 +11,17 @@ import Character_package.Character;
 import Character_package.Enemy;
 import Character_package.Hero;
 
-public class Game_Window extends Panel implements Runnable {
+public class Game_Window extends Canvas implements Runnable {
 
-	static ArrayList<Enemy> enemy_list = new ArrayList<>();
 	static ArrayList<Hero> hero_list = new ArrayList<>();
-
+	Move_enemy m_e;
+	
 	int num = 0, weight, height;
 
 	public Game_Window(int weight, int height) {
 
+		m_e = new Move_enemy(10);
+		
 		this.weight = weight;
 		this.height = height;
 
@@ -31,52 +34,40 @@ public class Game_Window extends Panel implements Runnable {
 
 	public void GameStart() {
 
-		// while(true){
 		for (int i = 0; i < hero_list.size(); i++) {
-			Hero tempHero = hero_list.get(i);
-			boolean flag = false;
-
-			if (tempHero.isDie() == true) { // 죽었을때
+			
+			if (hero_list.get(i).isDie()) { // 죽었을때
 				hero_list.remove(i);
 				continue;
-
 			}
 			
-			for (int j = 0; j < enemy_list.size(); j++) {
+//			for (int j = 0; j < enemy_list.size(); j++) {
+//
+//				if (hero_list.get(i).Meet(enemy_list.get(j))) { //히어로와 적이 만났다!
+//					enemy_list.get(j).Damaged(hero_list.get(i).getStr()); // 적공격 받음
+//					hero_list.get(i).Damaged(enemy_list.get(j).getStr()); // 아군공격 받음	
+//					
+//					if (enemy_list.get(j).isDie()) {
+//						enemy_list.remove(j);
+//					}
+//					
+//				}
+//			}
 
-				if (tempHero.Meet(enemy_list.get(j))) {
-					enemy_list.get(j).Damaged(tempHero.getStr()); // 적공격
-					tempHero.Damaged(enemy_list.get(j).getStr()); // 아군공격 받음
-
-					flag = true;
-
-					if (enemy_list.get(j).isDie()) {
-						enemy_list.remove(j);
-						flag = false;
-					}
-					
-		
-				} else {
-					enemy_list.get(j).Move();
-				}
-			}
-
-			// 공격할 상대가 없으면 이동
-			if (flag == false) {
-			//	tempHero.Move();
-			}
 		}
 
 	}
 
-	// }
 
 	public void paint(Graphics g) {
-
+		
+		m_e.drop();
+		m_e.draw(g);
+		
 		g.fillRect(0, 0, weight, height);
 
 		ArrayList<Character> temp_array = new ArrayList<>();
-		temp_array.addAll(enemy_list);
+		//temp_array.addAll(enemy_list);
 		temp_array.addAll(hero_list);
 
 		for (int i = 0; i < temp_array.size(); i++) {
@@ -98,10 +89,8 @@ public class Game_Window extends Panel implements Runnable {
 			num++;
 			repaint();
 
-			if (num % 200 == 0) {
-				Enemy ene = new Enemy();
-				enemy_list.add(ene);
-			}
+
+			
 
 			GameStart();
 

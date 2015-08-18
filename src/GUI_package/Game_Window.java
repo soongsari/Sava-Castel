@@ -29,12 +29,7 @@ public class Game_Window extends Panel implements Runnable {
 		th.start();
 	}
 	
-	boolean isMeet(Hero h, Enemy e){
-		if(e.getX()-h.getX()<=20){
-			return true;
-		}
-		return false;
-	}
+
 
 	public void Check_Die() {
 

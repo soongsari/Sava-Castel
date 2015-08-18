@@ -1,6 +1,7 @@
 package Character_package;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 public abstract class Character {
 
@@ -11,6 +12,7 @@ public abstract class Character {
 	int x, y;
 	boolean type;
 	int image;
+	boolean isMeet;
 
 	
 	public void Stop(){
@@ -19,7 +21,7 @@ public abstract class Character {
 	
 	public abstract void Attack();
 
-	public abstract void Move();
+	public abstract void Move(ArrayList<Character> list);
 	
 	public boolean getType(){
 		return type;
@@ -27,12 +29,11 @@ public abstract class Character {
 
 	public boolean Meet(Character chr) {
 
-		boolean isMeet = false;
+		isMeet = false;
 
 		if (Math.abs(chr.getX() - x) <= 20) { // Enemy의 X+1 값이 Hero의 X 값과 같으면
 			isMeet = true;
 		}
-
 		return isMeet;
 	}
 
@@ -45,6 +46,7 @@ public abstract class Character {
 		if (HP <= 0) {
 			die = true;
 		}
+		
 	}
 
 	public int getX() {

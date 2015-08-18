@@ -48,7 +48,7 @@ public class Castle extends Character{
 	}
 
 	@Override
-	public void Move() {
+	public void Move(ArrayList<Character> list) {
 		// TODO Auto-generated method stub
 		
 	}

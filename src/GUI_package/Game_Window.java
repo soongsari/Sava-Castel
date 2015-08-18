@@ -1,6 +1,5 @@
 package GUI_package;
 
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -11,17 +10,15 @@ import Character_package.Character;
 import Character_package.Enemy;
 import Character_package.Hero;
 
-public class Game_Window extends Canvas implements Runnable {
+public class Game_Window extends Panel implements Runnable {
 
-	static ArrayList<Hero> hero_list = new ArrayList<>();
-	Move_enemy m_e;
-	
+	static ArrayList<Character> enemy_list = new ArrayList<>();
+	static ArrayList<Character> hero_list = new ArrayList<>();
+
 	int num = 0, weight, height;
 
 	public Game_Window(int weight, int height) {
 
-		m_e = new Move_enemy(10);
-		
 		this.weight = weight;
 		this.height = height;
 
@@ -31,49 +28,46 @@ public class Game_Window extends Canvas implements Runnable {
 		Thread th = new Thread(this);
 		th.start();
 	}
+	
+	boolean isMeet(Hero h, Enemy e){
+		if(e.getX()-h.getX()<=20){
+			return true;
+		}
+		return false;
+	}
 
-	public void GameStart() {
+	public void Check_Die() {
 
-		for (int i = 0; i < hero_list.size(); i++) {
-			
-			if (hero_list.get(i).isDie()) { // 죽었을때
-				hero_list.remove(i);
-				continue;
+		for (int i = 0; i < enemy_list.size(); i++) {
+			if(enemy_list.get(i).isDie()){
+				enemy_list.remove(i);
 			}
-			
-//			for (int j = 0; j < enemy_list.size(); j++) {
-//
-//				if (hero_list.get(i).Meet(enemy_list.get(j))) { //히어로와 적이 만났다!
-//					enemy_list.get(j).Damaged(hero_list.get(i).getStr()); // 적공격 받음
-//					hero_list.get(i).Damaged(enemy_list.get(j).getStr()); // 아군공격 받음	
-//					
-//					if (enemy_list.get(j).isDie()) {
-//						enemy_list.remove(j);
-//					}
-//					
-//				}
-//			}
-
+		}
+		
+		for (int i = 0; i < hero_list.size(); i++) {
+			if(hero_list.get(i).isDie()){
+				hero_list.remove(i);
+			}
 		}
 
 	}
 
 
 	public void paint(Graphics g) {
-		
-		m_e.drop();
-		m_e.draw(g);
-		
+
 		g.fillRect(0, 0, weight, height);
 
-		ArrayList<Character> temp_array = new ArrayList<>();
-		//temp_array.addAll(enemy_list);
-		temp_array.addAll(hero_list);
 
-		for (int i = 0; i < temp_array.size(); i++) {
-			Character temp = temp_array.get(i);
+		for (int i = 0; i < enemy_list.size(); i++) {
+			Character temp = enemy_list.get(i);
 			temp.Paint(g);
-			temp.Move();
+			temp.Move(hero_list);
+		}
+		
+		for (int i = 0; i < hero_list.size(); i++) {
+			Character temp = hero_list.get(i);
+			temp.Paint(g);
+			temp.Move(enemy_list);
 		}
 	}
 
@@ -89,10 +83,12 @@ public class Game_Window extends Canvas implements Runnable {
 			num++;
 			repaint();
 
+			if (num % 100 == 0) {
+				Enemy ene = new Enemy();
+				enemy_list.add(ene);
+			}
 
-			
-
-			GameStart();
+			Check_Die();
 
 			try {
 				Thread.sleep(15);

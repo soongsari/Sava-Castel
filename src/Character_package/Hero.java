@@ -3,6 +3,7 @@ package Character_package;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.ArrayList;
 
 public class Hero extends Character{
 	
@@ -18,6 +19,7 @@ public class Hero extends Character{
 			this.die = false;
 			this.type = true;		//true 는 아군 
 			this.image = 1;
+
 		}
 	}
 	
@@ -30,8 +32,22 @@ public class Hero extends Character{
 	}
 
 	@Override
-	public void Move() {		// 오른쪽에서 왼쪽으로 이동
-		x = x - SPEED;
+	public void Move(ArrayList<Character> list) {		// 오른쪽에서 왼쪽으로 이동
+
+		int ck=0;
+		
+		for(int i=0;i<list.size();i++){
+			if(Math.abs(this.x-list.get(i).x)<=20){
+				ck=1;
+				list.get(i).Damaged(STR);
+				break;
+			}
+		}
+		
+		if(ck==0){
+			x = x - SPEED;
+		}
+
 	}
 
 

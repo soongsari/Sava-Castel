@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import GUI_package.Game_Window;
 
-public class Enemy extends Character implements Runnable{
+public class Enemy extends Character{
 
 	public Enemy(){
 
@@ -17,6 +17,7 @@ public class Enemy extends Character implements Runnable{
 		this.STR = 1;
 		this.die = false;
 		this.type = false;		//true 는 아군 
+
 		//this.image = 1;
 	}
 
@@ -25,9 +26,29 @@ public class Enemy extends Character implements Runnable{
 		
 	}
 
-	public void Move() {		//왼쪽에서 오른쪽으로 이동
+	public void Move(ArrayList<Character> list) {		//왼쪽에서 오른쪽으로 이동
 
-		x = x + SPEED;
+		int ck=0;
+		
+		for(int i=0;i<list.size();i++){
+			if(Math.abs(this.x-list.get(i).x)<=20){
+				ck=1;
+				list.get(i).Damaged(STR);
+
+				break;
+			}
+		}
+		
+		if(ck==0){
+			x = x + SPEED;
+		}
+		}
+	
+	@Override
+	public boolean Meet(Character chr) {
+		// TODO Auto-generated method stub
+		return super.Meet(chr);
+		
 	}
 
 
@@ -41,11 +62,8 @@ public class Enemy extends Character implements Runnable{
 		g.drawRect(x, y, 30, 30);
 		
 	}
-
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
-	}
+    public void update(Graphics g) {
+    	Paint(g);
+    }
 
 }

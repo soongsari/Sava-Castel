@@ -32,7 +32,7 @@ public class Move_enemy {
 	void drop(){
 		for(int i=0;i<enemy_num;i++){
 			Enemy temp = enemy_list.get(i);
-			temp.Move();
+			//temp.Move();
 		}
 	}
 	
